@@ -8,7 +8,7 @@ import java.net.Socket;
 import no.hvl.dat110.TODO;
 
 public class Connection {
-
+//test commit
 	private DataOutputStream outStream; // for writing bytes to the underlying TCP connection
 	private DataInputStream inStream; // for reading bytes from the underlying TCP connection
 	private Socket socket; // socket for the underlying TCP connection
