@@ -28,11 +28,11 @@ public class RPCUtils {
 
 	public static String unmarshallString(byte[] data) {
 
-		String decoded = new String(data, 1, data.length);
+		return new String(data, 1, data.length-1);
 
 		// TODO: unmarshall String contained in data into decoded
 
-		return decoded;
+
 	}
 
 	public static byte[] marshallVoid(byte rpcid) {
