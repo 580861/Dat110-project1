@@ -19,7 +19,7 @@ public class MessagingClient {
 	// connect to messaging server
 	public Connection connect() {
 
-		Socket clientSocket = new Socket();
+		Socket clientSocket;
 		Connection connection = null;
 
 		// TODO
@@ -27,8 +27,10 @@ public class MessagingClient {
 		// create connection object
 		
 		try {
-			clientSocket.connect(new InetSocketAddress(server,port));
-		} catch (Exception e) {
+			clientSocket = new Socket(server,port);
+			connection= new Connection(clientSocket);
+			
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		

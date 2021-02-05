@@ -34,7 +34,7 @@ public class Connection {
 
 		try {
 			outStream.write(message.encapsulate());
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -43,20 +43,19 @@ public class Connection {
 	public Message receive() {
 
 		Message message = new Message();
-		byte[] recvbuf= new byte[127]; 
-		
+		byte[] recvbuf = new byte[127];
 
 		// TODO
 		// read a segment (128 bytes) from the input stream and decapsulate into message
 		// Hint: create a new Message object and use the decapsulate method
-		
+
 		try {
 			inStream.read(recvbuf);
 		} catch (IOException e) {
 			e.printStackTrace();
 			// TODO: handle exception
 		}
-		
+
 		message.decapsulate(recvbuf);
 
 		return message;
