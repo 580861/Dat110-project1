@@ -2,6 +2,7 @@ package no.hvl.dat110.system.sensor;
 
 import no.hvl.dat110.rpc.RPCServer;
 import no.hvl.dat110.system.controller.Common;
+import no.hvl.dat110.system.display.DisplayImpl;
 
 public class SensorDevice {
 
@@ -9,15 +10,15 @@ public class SensorDevice {
 		
 		System.out.println("Sensor server starting ...");
 		
-		SensorImpl sensor = new SensorImpl();
+		DisplayImpl display = new DisplayImpl();
 		
-		RPCServer sensorserver = new RPCServer(Common.SENSORPORT);
+		RPCServer server = new RPCServer(Common.SENSORPORT);
 		
-	    sensorserver.register(1,sensor);
+	    server.register(1,display);
 		
-		sensorserver.run();
+		server.run();
 		
-		sensorserver.stop();
+		server.stop();
 		
 		System.out.println("Sensor server stopping ...");
 		

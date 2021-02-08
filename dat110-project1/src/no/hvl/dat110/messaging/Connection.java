@@ -8,10 +8,9 @@ import java.net.Socket;
 import no.hvl.dat110.TODO;
 
 public class Connection {
-//test commit
-	private DataOutputStream outStream; // for writing bytes to the underlying TCP connection
-	private DataInputStream inStream; // for reading bytes from the underlying TCP connection
-	private Socket socket; // socket for the underlying TCP connection
+	private DataOutputStream outStream; 
+	private DataInputStream inStream; 
+	private Socket socket; 
 
 	public Connection(Socket socket) {
 
@@ -23,17 +22,18 @@ public class Connection {
 
 			inStream = new DataInputStream(socket.getInputStream());
 
-		} catch (IOException ex) {
+		} catch (IOException e) {
 
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
+			System.out.println("Connection: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
 	public void send(Message message) {
 
+		byte[] encap = message.encapsulate();
 		try {
-			outStream.write(message.encapsulate());
+			outStream.write(encap, 0, MessageConfig.SEGMENTSIZE);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -43,17 +43,15 @@ public class Connection {
 	public Message receive() {
 
 		Message message = new Message();
-		byte[] recvbuf = new byte[127];
+		byte[] recvbuf = new byte[MessageConfig.SEGMENTSIZE];
 
-		// TODO
-		// read a segment (128 bytes) from the input stream and decapsulate into message
-		// Hint: create a new Message object and use the decapsulate method
+		
 
 		try {
-			inStream.read(recvbuf);
+			inStream.read(recvbuf, 0, MessageConfig.SEGMENTSIZE);
 		} catch (IOException e) {
 			e.printStackTrace();
-			// TODO: handle exception
+			
 		}
 
 		message.decapsulate(recvbuf);
@@ -62,7 +60,7 @@ public class Connection {
 
 	}
 
-	// close the connection by closing streams and the underlying socket
+	
 	public void close() {
 
 		try {

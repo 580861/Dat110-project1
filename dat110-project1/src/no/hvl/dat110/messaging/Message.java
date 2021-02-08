@@ -9,12 +9,10 @@ public class Message {
 	private byte[] payload;
 
 	public Message(byte[] payload) {
-		 // TODO: check for length within boundary
 		
-		if(payload.length<128) {
-			this.payload=payload;
-		} else {
-			this.payload=null;
+		this.payload = payload;
+		if (payload.length > MessageConfig.SEGMENTSIZE) {
+			throw new ArrayIndexOutOfBoundsException("Message size cannot exceed 128 byte");
 		}
 	}
 
@@ -23,37 +21,31 @@ public class Message {
 	}
 
 	public byte[] getData() {
-		return this.payload; 
+		return this.payload;
 	}
 
 	public byte[] encapsulate() {
-		
-		byte[] encoded = new byte [MessageConfig.SEGMENTSIZE];
-		encoded[0]= (byte) payload.length;
+
+		byte[] encoded = new byte[MessageConfig.SEGMENTSIZE];
+		encoded[0] = (byte) payload.length;
 		for (int i = 0; i < payload.length; i++) {
-			encoded[i+1]=payload[i];
-			
+			encoded[i + 1] = payload[i];
+
 		}
-		
-		// TODO
-		// encapulate/encode the payload of this message in the
-		// encoded byte array according to message format
-		
+
 		return encoded;
-		
+
 	}
 
 	public void decapsulate(byte[] received) {
 
-		// TODO
-		// decapsulate the data contained in the received byte array and store it 
-		// in the payload of this message
 		
-		payload = new byte[received[0]];
-		for (int i = 0; i < received[0]; i++) {
-			payload[i]=received[i+1];
-			
+		int size = received[0];
+		byte[] decapsulate = new byte[size];
+		for (int i = 0; i < size; i++) {
+			decapsulate[i] = received[i + 1];
 		}
-		
+		payload = decapsulate;
+
 	}
 }

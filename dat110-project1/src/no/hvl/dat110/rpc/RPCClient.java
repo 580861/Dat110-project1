@@ -19,7 +19,7 @@ public class RPCClient {
 
 	public void connect() {
 
-		// TODO: connect using the underlying messaging layer connection
+		
 
 		connection = msgclient.connect();
 
@@ -27,29 +27,19 @@ public class RPCClient {
 
 	public void disconnect() {
 
-		// TODO: disconnect/close the underlying messaging connection
-
 		connection.close();
 
 	}
 
 	public byte[] call(byte[] rpcrequest) {
+		byte[] rpcreply = null;
 		Message message = new Message(rpcrequest);
 		connection.send(message);
-		/*
-		 * TODO:
-		 * 
-		 * Make a remote call on the RPC server by sending the RPC request message and
-		 * receive an RPC reply message
-		 * 
-		 * rpcrequest is the marshalled rpcrequest from the client-stub rpctreply is the
-		 * rpcreply to be unmarshalled by the client-stub
-		 * 
-		 */
+		
 
-		byte[] reply = connection.receive().getData();
+		 rpcreply = connection.receive().getData();
 
-		return reply;
+		return rpcreply;
 
 	}
 

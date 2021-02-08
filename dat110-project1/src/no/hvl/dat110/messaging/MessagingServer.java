@@ -16,31 +16,20 @@ public class MessagingServer {
 
 			this.welcomeSocket = new ServerSocket(port);
 
-		} catch (IOException ex) {
+		} catch (IOException e) {
 
-			System.out.println("Messaging server: " + ex.getMessage());
-			ex.printStackTrace();
+			System.out.println("Messaging server: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
-	// accept an incoming connection from a client
-	public Connection accept() {
+	
+	public Connection accept() throws IOException {
 
 		Connection connection = null;
+		Socket messaging = welcomeSocket.accept();
+		connection = new Connection(messaging);
 
-		// TODO
-		// accept TCP connection on welcome socket and create messaging connection
-		
-		
-		try {
-			Socket socket= welcomeSocket.accept();
-			connection = new Connection(socket);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		
 		return connection;
 
 	}
@@ -55,7 +44,7 @@ public class MessagingServer {
 
 				System.out.println("Messaging server: " + e.getMessage());
 				e.printStackTrace();
-				
+
 			}
 		}
 	}
